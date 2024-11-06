@@ -8,14 +8,24 @@ from selenium.webdriver.common.by import By
 
 from webdriver_manager.chrome import ChromeDriverManager
 
+#Yield is like return but i can keep typing below that
+@pytest.fixture()
+def driver():
+    print("Creating chrome driver")
+    my_driver = webdriver.Chrome()
+    yield my_driver
+    print("Close chrome driver")
+    my_driver.quit()
+
+
 
 class TestNegativeScenarios:
 
     @pytest.mark.login
     @pytest.mark.negative
-    def test_negative_username(self):
+    def test_negative_username(self, driver):
         # Open page
-        driver = webdriver.Chrome()
+        #driver = webdriver.Chrome()
         driver.get("https://practicetestautomation.com/practice-test-login/")
 
         # Type incorrect username student into Username field
@@ -41,9 +51,9 @@ class TestNegativeScenarios:
 
     @pytest.mark.login
     @pytest.mark.negative
-    def test_negative_password(self):
+    def test_negative_password(self, driver):
         # Open page
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         driver.get("https://practicetestautomation.com/practice-test-login/")
 
         # Type username student into Username field
@@ -66,15 +76,3 @@ class TestNegativeScenarios:
         # Verify error message is displayed for username
         error_message = error_message_locator.text
         assert error_message == "Your password is invalid!", "Error message is not expected"
-
-
-
-
-
-
-
-
-
-
-
-
