@@ -12,9 +12,10 @@ class TestPositiveScenarios:
 #This is a comment update.
     @pytest.mark.login
     @pytest.mark.positive
-    def test_positive_login(self):
+    def test_positive_login(self, driver):
         #Open Browser
-        driver = webdriver.Chrome()
+        #Remove this line because the fixture is used
+        #driver = webdriver.Chrome()
 
         #Open page
         driver.get("https://practicetestautomation.com/practice-test-login/")

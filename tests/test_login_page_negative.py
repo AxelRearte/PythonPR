@@ -9,13 +9,7 @@ from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
 #Yield is like return but i can keep typing below that
-@pytest.fixture()
-def driver():
-    print("Creating chrome driver")
-    my_driver = webdriver.Chrome()
-    yield my_driver
-    print("Close chrome driver")
-    my_driver.quit()
+
 
 
 
