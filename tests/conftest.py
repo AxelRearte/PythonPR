@@ -1,4 +1,5 @@
 import time
+from pydoc import browse
 from webbrowser import get
 import pytest
 from selenium import webdriver
@@ -8,9 +9,10 @@ from selenium.webdriver.firefox.service import Service as FirefoxService
 from urllib3 import request
 from webdriver_manager.firefox import GeckoDriverManager
 
-@pytest.fixture()
+@pytest.fixture(params=["chrome", "firefox"])
 def driver(request):
-    browser = request.config.getoption("--browser")
+    #browser = request.config.getoption("--browser")
+    browser = request.param
     print(f"Creating {browser} driver")
     if browser == "chrome":
         my_driver = webdriver.Chrome()
