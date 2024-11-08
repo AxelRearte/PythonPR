@@ -73,18 +73,18 @@ class TestNegativeScenarios:
         assert error_message == "Your username is invalid!", "Error message is not expected"
 
 
-    def test_negative_password(self, driver, username, password, expected_error_message):
+    def test_negative_password(self, driver):
         # Open page
         #driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         driver.get("https://practicetestautomation.com/practice-test-login/")
 
         # Type username student into Username field
         username_locator = driver.find_element(By.ID, "username")
-        username_locator.send_keys(username)
+        username_locator.send_keys("student")
 
         # Type incorrect password Password123 into Password field
         password_locator = driver.find_element(By.ID, "password")
-        password_locator.send_keys(password)
+        password_locator.send_keys("Password1234")
 
         # Push Submit button
         submit_button_locator = driver.find_element(By.XPATH, "//button[@id='submit']")
@@ -97,4 +97,4 @@ class TestNegativeScenarios:
 
         # Verify error message is displayed for username
         error_message = error_message_locator.text
-        assert error_message == expected_error_message, "Error message is not expected"
+        assert error_message == "Your password is invalid!", "Error message is not expected"
