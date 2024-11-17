@@ -5,6 +5,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
+from selenium.webdriver.remote.webelement import WebElement
 
 from webdriver_manager.chrome import ChromeDriverManager
 
@@ -98,3 +99,6 @@ class TestNegativeScenarios:
         # Verify error message is displayed for username
         error_message = error_message_locator.text
         assert error_message == "Your password is invalid!", "Error message is not expected"
+
+
+
