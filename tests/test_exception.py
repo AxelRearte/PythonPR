@@ -6,8 +6,7 @@ from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import presence_of_element_located
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-
+from selenium.webdriver.support import expected_conditions as EC, wait
 
 
 class TestExceptions:
@@ -31,28 +30,6 @@ class TestExceptions:
         assert row_2_input_element.is_displayed(), "Row 2 input should be displayed, but it's not"
 
 
-    """
-    @pytest.mark.exceptions
-    def test_no_such_element_exception(self, driver):
-        # Open page
-        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
-
-        # Click Add button
-        add_button_locator = driver.find_element(By.ID, "add_btn")
-        add_button_locator.click()
-
-        # Esperar a que el campo de entrada de la fila 2 esté presente
-        try:
-            row_2_input_locator = WebDriverWait(driver, 10).until(
-                EC.presence_of_element_located((By.XPATH, "//div[@id='row2']/input"))
-            )
-        except TimeoutException:
-            print("Timeout: El elemento no está presente en la página.")
-            assert False  # o maneja la excepción como desees
-
-        # Si el elemento es encontrado, puedes interactuar con él aquí
-        row_2_input_locator.send_keys("Texto de prueba")
-    """
     @pytest.mark.exceptions
     @pytest.mark.debug
     def test_element_not_interactable_exception(self, driver):
@@ -82,4 +59,32 @@ class TestExceptions:
         #Confirmation text locator
         confirmation_locator = driver.find_element(By.ID, "confirmation")
         assert confirmation_locator.text == "Row 2 was saved", "Confirmation message is not as expected"
+
+    @pytest.mark.exceptions
+    @pytest.mark.invalidstate
+    def test_invalid_state_element_exception(self, driver):
+        # Open page
+        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
+
+        # Click Add button
+        edit_button_locator = driver.find_element(By.ID, "edit_btn")
+        edit_button_locator.click()
+
+        #Find text locator and clear value
+        row_1_input_element = driver.find_element(By.XPATH, "//div[@id='row1']/input")
+        wait = WebDriverWait(driver, 10)
+        wait.until(EC.element_to_be_clickable(row_1_input_element))
+        row_1_input_element.clear()
+
+        row_1_input_element.send_keys("Sushi")
+
+        #Save button
+        save_button_locator = driver.find_element(By.ID, "save_btn")
+        save_button_locator.click()
+
+        # Confirmation text locator
+        confirmation_locator = wait.until(EC.visibility_of_element_located((By.ID, "confirmation")))
+        confirmation_locator = driver.find_element(By.ID, "confirmation")
+        assert confirmation_locator.text == "Row 1 was saved", "Confirmation message is not as expected"
+
 
