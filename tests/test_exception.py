@@ -2,6 +2,7 @@ import time
 from lib2to3.fixes.fix_tuple_params import tuple_name
 from telnetlib import EC
 import pytest
+from selenium import webdriver
 from selenium.common import TimeoutException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.expected_conditions import presence_of_element_located
@@ -86,5 +87,26 @@ class TestExceptions:
         confirmation_locator = wait.until(EC.visibility_of_element_located((By.ID, "confirmation")))
         confirmation_locator = driver.find_element(By.ID, "confirmation")
         assert confirmation_locator.text == "Row 1 was saved", "Confirmation message is not as expected"
+
+    @pytest.mark.exceptions
+    @pytest.mark.referenceexcepetion
+    def test_no_such_element_exception(self, driver):
+        # Open page
+        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
+
+        #instrucion element
+        instruction_locator = driver.find_element(By.ID, "instructions")
+
+        # Click Add button
+        add_button_locator = driver.find_element(By.ID, "add_btn")
+        add_button_locator.click()
+
+        #Verify instructions is not displayed
+        wait = WebDriverWait(driver, 10)
+        assert wait.until(EC.invisibility_of_element_located((By.ID, "instructions")),"Instruction text element should not be displayed")
+
+
+
+
 
 
