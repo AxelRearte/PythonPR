@@ -3,12 +3,7 @@ import pytest
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
-
-
 #Yield is like return but i can keep typing below that
-
-
-
 
 class TestNegativeScenarios:
 
