@@ -62,7 +62,6 @@ class TestExceptions:
         assert confirmation_locator.text == "Row 2 was saved", "Confirmation message is not as expected"
 
     @pytest.mark.exceptions
-    @pytest.mark.invalidstate
     def test_invalid_state_element_exception(self, driver):
         # Open page
         driver.get("https://practicetestautomation.com/practice-test-exceptions/")
@@ -89,7 +88,6 @@ class TestExceptions:
         assert confirmation_locator.text == "Row 1 was saved", "Confirmation message is not as expected"
 
     @pytest.mark.exceptions
-    @pytest.mark.referenceexcepetion
     def test_reference_exception(self, driver):
         # Open page
         driver.get("https://practicetestautomation.com/practice-test-exceptions/")
@@ -106,7 +104,6 @@ class TestExceptions:
         assert wait.until(EC.invisibility_of_element_located((By.ID, "instructions")),"Instruction text element should not be displayed")
 
     @pytest.mark.exceptions
-    @pytest.mark.timeout
     def test_timeout_exception(self, driver):
         # Open page
         driver.get("https://practicetestautomation.com/practice-test-exceptions/")
