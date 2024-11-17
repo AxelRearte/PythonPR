@@ -44,6 +44,7 @@ def driver(request):
     else:
         raise TypeError(f"Expected 'chrome', but got {browser}")
     # my_driver = webdriver.Safari()  # Si se desea, se puede descomentar para Safari
+    #my_driver.implicitly_wait(10)
     yield my_driver
     print(f"Closing {browser} driver")
     my_driver.quit()
