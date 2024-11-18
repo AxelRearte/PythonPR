@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 #Yield is like return but i can keep typing below that
+from tests.config import LOGIN_URL
 
 class TestNegativeScenarios:
 
@@ -14,20 +15,16 @@ class TestNegativeScenarios:
     def test_negative_login(self, driver, username, password, expected_error_message):
         # Open page
         # driver = webdriver.Chrome()
-        driver.get("https://practicetestautomation.com/practice-test-login/")
+        driver.get(LOGIN_URL)
 
         # Type incorrect username student into Username field
-        username_locator = driver.find_element(By.ID, "username")
-        username_locator.send_keys(username)
+        driver.find_element(By.ID, "username").send_keys(username)
 
         # Type password Password123 into Password field
-        password_locator = driver.find_element(By.ID, "password")
-        password_locator.send_keys(password)
+        driver.find_element(By.ID, "password").send_keys(password)
 
         # Push Submit button
-        submit_button_locator = driver.find_element(By.XPATH, "//button[@id='submit']")
-        submit_button_locator.click()
-        time.sleep(2)
+        driver.find_element(By.XPATH, "//button[@id='submit']").click()
 
         # Verify error message is displayed
         error_message_locator = driver.find_element(By.ID, "error")
@@ -37,7 +34,7 @@ class TestNegativeScenarios:
         error_message = error_message_locator.text
         assert error_message == expected_error_message, "Error message is not expected"
 
-
+    """
     def test_negative_username(self, driver):
         # Open page
         #driver = webdriver.Chrome()
@@ -90,6 +87,7 @@ class TestNegativeScenarios:
         # Verify error message is displayed for username
         error_message = error_message_locator.text
         assert error_message == "Your password is invalid!", "Error message is not expected"
+        """
 
 
 
