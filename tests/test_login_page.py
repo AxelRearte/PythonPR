@@ -7,7 +7,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 
-from tests.config import LOGIN_URL, SUCCESS_URL, USERNAME, PASSWORD, SUCCESS_TEXT
+from tests.config import LOGIN_URL, SUCCESS_URL, USERNAME, PASSWORD, SUCCESS_TEXT, click_element_by_xpath, SUBMIT_BUTTON_XPATH
 
 
 class TestPositiveScenarios:
@@ -28,7 +28,8 @@ class TestPositiveScenarios:
         driver.find_element(By.ID, "password").send_keys(PASSWORD)
 
         #Push Submit button
-        driver.find_element(By.XPATH, "//button[@id='submit']").click()
+        #driver.find_element(By.XPATH, "//button[@id='submit']").click()
+        click_element_by_xpath(driver, SUBMIT_BUTTON_XPATH)
 
         #Verify new page URL contains practicetestautomation.com/logged-in-successfully/
         assert driver.current_url == SUCCESS_URL

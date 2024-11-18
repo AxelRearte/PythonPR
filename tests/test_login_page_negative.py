@@ -4,7 +4,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 #Yield is like return but i can keep typing below that
-from tests.config import LOGIN_URL
+from tests.config import LOGIN_URL, click_element_by_xpath, SUBMIT_BUTTON_XPATH
+
 
 class TestNegativeScenarios:
 
@@ -24,7 +25,7 @@ class TestNegativeScenarios:
         driver.find_element(By.ID, "password").send_keys(password)
 
         # Push Submit button
-        driver.find_element(By.XPATH, "//button[@id='submit']").click()
+        click_element_by_xpath(driver, SUBMIT_BUTTON_XPATH)
 
         # Verify error message is displayed
         error_message_locator = driver.find_element(By.ID, "error")
