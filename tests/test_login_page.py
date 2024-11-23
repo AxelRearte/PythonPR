@@ -7,6 +7,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 
+from page_objects.login_page import LoginPage
 from tests.config import LOGIN_URL, SUCCESS_URL, USERNAME, PASSWORD, SUCCESS_TEXT, click_element_by_xpath, SUBMIT_BUTTON_XPATH
 
 
@@ -15,6 +16,19 @@ class TestPositiveScenarios:
     @pytest.mark.login
     @pytest.mark.positive
     def test_positive_login(self, driver):
+        login_page = LoginPage(driver)
+        # Open page
+        login_page.open()
+        login_page._open_url()
+        # Type username student into Username field
+        # Type password Password123 into Password field
+        # Push Submit button
+        # Verify new page URL contains practicetestautomation.com/logged-in-successfully/
+        # Verify new page contains expected text ('Congratulations' or 'successfully logged in')
+        # Verify button Log out is displayed on the new page
+
+
+
         #Open Browser
         #Remove this line because the fixture is used
         #driver = webdriver.Chrome()

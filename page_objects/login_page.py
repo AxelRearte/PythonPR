@@ -18,13 +18,9 @@ class LoginPage(BasePage):
         super().__init__(driver)
 
     def open(self):
-        super().open_url(self.__url)
+        super()._open_url(self.__url)
 
-
-
-    def execute_login(self, username: str , password: str):
+    def execute_login(self, username: str, password: str):
         super()._type(self.__username_field, username)
         super()._type(self.__password_field, password)
         super()._click(self.__submit_button)
-
-
