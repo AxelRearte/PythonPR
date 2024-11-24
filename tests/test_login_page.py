@@ -7,6 +7,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service as ChromeService
 
+from page_objects.logged_in_successfully import LoggedInSuccessfullyPage
 from page_objects.login_page import LoginPage
 from tests.config import LOGIN_URL, SUCCESS_URL, USERNAME, PASSWORD, SUCCESS_TEXT, click_element_by_xpath, SUBMIT_BUTTON_XPATH
 
@@ -17,51 +18,11 @@ class TestPositiveScenarios:
     @pytest.mark.positive
     def test_positive_login(self, driver):
         login_page = LoginPage(driver)
-        # Open page
         login_page.open()
-        login_page._open_url()
-        # Type username student into Username field
-        # Type password Password123 into Password field
-        # Push Submit button
+        login_page.execute_login("student", "Password123")
         # Verify new page URL contains practicetestautomation.com/logged-in-successfully/
-        # Verify new page contains expected text ('Congratulations' or 'successfully logged in')
-        # Verify button Log out is displayed on the new page
+        logged_in_page = LoggedInSuccessfullyPage(driver)
+        assert logged_in_page.expected_url == login_page.current_url, "Actual url is not the same as expected"
+        assert logged_in_page.header == "Logged In Successfully", "Header is not expected"
+        assert logged_in_page.is_logout_button_displayed(), "Logout button should be visible"
 
-
-
-        #Open Browser
-        #Remove this line because the fixture is used
-        #driver = webdriver.Chrome()
-
-        #Open page
-        driver.get(LOGIN_URL)
-        #Type username student into Username field
-        driver.find_element(By.ID, "username").send_keys(USERNAME)
-
-        #Type password Password123 into Password field
-        driver.find_element(By.ID, "password").send_keys(PASSWORD)
-
-        #Push Submit button
-        #driver.find_element(By.XPATH, "//button[@id='submit']").click()
-        click_element_by_xpath(driver, SUBMIT_BUTTON_XPATH)
-
-        #Verify new page URL contains practicetestautomation.com/logged-in-successfully/
-        assert driver.current_url == SUCCESS_URL
-
-        #Verify new page contains expected text ('Congratulations' or 'successfully logged in')
-        success_text = driver.find_element(By.TAG_NAME, "h1").text
-        assert success_text == SUCCESS_TEXT
-
-        #Verify button Log out is displayed on the new page
-        assert driver.find_element(By.LINK_TEXT, "Log out").is_displayed()
-
-        """"""""""
-        Test case 1: Positive LogIn test
-        
-        
-        
-        Push Submit button
-        
-        Verify new page contains expected text ('Congratulations' or 'successfully logged in')
-        Verify button Log out is displayed on the new page
-        """""""""""
