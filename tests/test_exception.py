@@ -9,83 +9,37 @@ from selenium.webdriver.support.expected_conditions import presence_of_element_l
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC, wait
 
+from page_objects.exceptions_page import ExceptionsPage
+
 
 class TestExceptions:
 
 
     @pytest.mark.exceptions
     def test_no_such_element_exception(self, driver):
-        # Open page
-        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
+        exception_page = ExceptionsPage(driver)
+        exception_page.open()
+        exception_page.add_second_row()
+        assert exception_page.is_row2_displayed(), "Row 2 input should be displayed, but it's not"
 
-        # Click Add button
-        add_button_locator = driver.find_element(By.ID, "add_btn")
-        add_button_locator.click()
+    @pytest.mark.exceptions
+    def test_element_not_interactable_exception(self, driver):
+        exception_page = ExceptionsPage(driver)
+        exception_page.open()
+        exception_page.add_second_row()
+        exception_page.add_second_food("Hello")
+        assert exception_page.get_confirmation_message() == "Row 2 was saved", "Confirmation message is not as expected"
 
-        #Adding a WebDriverWait method and disable on fixture()
-        wait = WebDriverWait(driver, 10)
-        row_2_input_element = wait.until(EC.presence_of_element_located((By.XPATH, "//div[@id='row2']/input")))
-
-
-        # Verify Row 2 input field is displayed
-        assert row_2_input_element.is_displayed(), "Row 2 input should be displayed, but it's not"
 
 
     @pytest.mark.exceptions
     @pytest.mark.debug
-    def test_element_not_interactable_exception(self, driver):
-        # Open page
-        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
-
-        # Click Add button
-        add_button_locator = driver.find_element(By.ID, "add_btn")
-        add_button_locator.click()
-
-        #Adding a WebDriverWait method and disable on fixture()
-        wait = WebDriverWait(driver, 10)
-        row_2_input_element = wait.until(EC.presence_of_element_located((By.XPATH, "//div[@id='row2']/input")))
-
-
-        # Verify Row 2 input field is displayed
-        assert row_2_input_element.is_displayed(), "Row 2 input should be displayed, but it's not"
-
-        #Type Text
-        row_2_input_element.send_keys("Hello")
-
-        #Find Locator of button save
-        #Find a unique locator of button save $x("//div[@id='row2']/button[@name='Save']")
-        save_button_locator = driver.find_element(By.XPATH, "//div[@id='row2']/button[@name='Save']")
-        save_button_locator.click()
-
-        #Confirmation text locator
-        confirmation_locator = driver.find_element(By.ID, "confirmation")
-        assert confirmation_locator.text == "Row 2 was saved", "Confirmation message is not as expected"
-
-    @pytest.mark.exceptions
     def test_invalid_state_element_exception(self, driver):
-        # Open page
-        driver.get("https://practicetestautomation.com/practice-test-exceptions/")
+        exceptions_page = ExceptionsPage(driver)
+        exceptions_page.open()
+        exceptions_page.modify_row_1_input("Sushi")
+        assert exceptions_page.get_confirmation_message() == "Row 1 was saved", "Confirmation message is not expected"
 
-        # Click Add button
-        edit_button_locator = driver.find_element(By.ID, "edit_btn")
-        edit_button_locator.click()
-
-        #Find text locator and clear value
-        row_1_input_element = driver.find_element(By.XPATH, "//div[@id='row1']/input")
-        wait = WebDriverWait(driver, 10)
-        wait.until(EC.element_to_be_clickable(row_1_input_element))
-        row_1_input_element.clear()
-
-        row_1_input_element.send_keys("Sushi")
-
-        #Save button
-        save_button_locator = driver.find_element(By.ID, "save_btn")
-        save_button_locator.click()
-
-        # Confirmation text locator
-        confirmation_locator = wait.until(EC.visibility_of_element_located((By.ID, "confirmation")))
-        confirmation_locator = driver.find_element(By.ID, "confirmation")
-        assert confirmation_locator.text == "Row 1 was saved", "Confirmation message is not as expected"
 
     @pytest.mark.exceptions
     def test_reference_exception(self, driver):
