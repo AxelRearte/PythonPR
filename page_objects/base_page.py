@@ -4,7 +4,11 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC, wait
 
-
+#Crear un readme file
+#Framework Web, mobile y servicios de apis
+#Appium librerias mobile. Emuladores y devices fisicos
+#Hacer login_page_mobile, driver de appium. Verificar que se comporte lo mismo con el click por ejemplo.
+#Graficar modulos de page objects y relacionarlo con tests
 class BasePage:
     def __init__(self, driver: WebDriver):
         self._driver = driver

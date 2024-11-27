@@ -1,7 +1,6 @@
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
-
 from page_objects.base_page import BasePage
 from tests.config import USERNAME, click_element_by_xpath, PASSWORD, SUBMIT_BUTTON_XPATH
 from tests.conftest import driver
